@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E36 Remote Control Vehicle</title>
+    <link rel="stylesheet" href="personal-projects-rc.css">
+    <link rel="stylesheet" href="../main-nav/main-nav-style.css">
+    <link rel="stylesheet" href="../footer/footer-links-style.css"> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.x/css/all.min.css">
+    <script src="https://unpkg.com/@google/model-viewer/dist/model-viewer.js"></script>
+</head>
+
+<body>
+    <header>   
+        <div id="navbar"></div>
+        <script src="../main-nav/main-load-nav.js"></script>
+        <h1>E36 Remote Control Vehicle Project</h1>   
+    </header>
+
+    <nav class="e36-nav" role="navigation" aria-label="Main Navigation">
+        <ul class="toc">
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#objectives">Project Objectives</a></li>
+            <li><a href="#overview">Project Overview</a></li>
+            <li>
+                <a href="#iterations" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">RC Iterations</a>
+                <div class="dropdown">
+                    <ul>
+                        <!-- Nested Dropdowns -->
+                        <li>
+                            <a href="#iteration-1" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Iteration 1.0</a>
+                            <div class="dropdown">
+                                <ul>
+                                    <li>
+                                        <a href="#iteration-1-1">Iteration 1.1</a>
+                                        <div class="dropdown">
+                                            <ul>
+                                                <li><a href="#iteration-1-1-1">Iteration 1.1.1</a></li>
+                                                <li><a href="#iteration-1-1-2">Iteration 1.1.2</a></li>
+                                                <li><a href="#iteration-1-1-3">Iteration 1.1.3</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a href="#iteration-1-2" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Iteration 1.2</a>
+                                        <div class="dropdown">
+                                            <ul>
+                                                <li><a href="#iteration-1-2-1">Iteration 1.2.1</a></li>
+                                                <li><a href="#iteration-1-2-2">Iteration 1.2.2</a></li>
+                                                <li><a href="#iteration-1-2-3">Iteration 1.2.3</a></li>
+                                                <li><a href="#iteration-1-2-4">Iteration 1.2.4</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li><a href="#iteration-1-3">Iteration 1.3</a></li>
+                                    <li><a href="#iteration-1-4">Iteration 1.4</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="#iteration-2" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Iteration 2.0</a>
+                            <div class="dropdown">
+                                <ul>
+                                    <li><a href="#iteration-2-0">Iteration 2.0</a></li>
+                                    <li><a href="#iteration-2-1">Iteration 2.1</a></li>
+                                    <li><a href="#iteration-2-2">Iteration 2.2</a></li>
+                                    <li><a href="#iteration-2-3">Iteration 2.3</a></li>
+                                    <li><a href="#iteration-2-4">Iteration 2.4</a></li>
+                                    <li><a href="#iteration-2-5">Iteration 2.5</a></li>
+                                    <li><a href="#iteration-2-6">Iteration 2.6</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a href="#controller-iterations" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Controller Iterations</a>
+                <div class="dropdown">
+                    <ul>
+                        <li><a href="#controller-iteration-1">Iteration 1.0</a></li>
+                        <li><a href="#controller-iteration-2">Iteration 2.0</a></li>
+                        <li><a href="#controller-iteration-3">Iteration 3.0</a></li>
+                        <li><a href="#controller-iteration-4">Iteration 4.0</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    
+
+     <!-- Dropdown Toggle Script -->
+     <script>
+        // E36 Navigation Dropdown Behavior with ARIA support
+        document.querySelectorAll('.e36-nav .dropdown-toggle').forEach(item => {
+            item.addEventListener('click', event => {
+                event.preventDefault();
+                const dropdown = item.nextElementSibling;
+    
+                // Toggle ARIA expanded state
+                const isExpanded = item.getAttribute('aria-expanded') === 'true';
+                item.setAttribute('aria-expanded', !isExpanded);
+    
+                // Close other dropdowns at the same level
+                const parentLi = item.parentElement.parentElement; // <ul> parent
+                parentLi.querySelectorAll('.dropdown').forEach(d => {
+                    if (d !== dropdown) {
+                        d.classList.remove('show');
+                        const toggle = d.previousElementSibling;
+                        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+    
+                // Toggle the current dropdown
+                if (dropdown) {
+                    dropdown.classList.toggle('show');
+                }
+            });
+        });
+    
+        // Close dropdowns when clicking outside of e36-nav
+        document.addEventListener('click', event => {
+            if (!event.target.closest('.e36-nav')) {
+                document.querySelectorAll('.e36-nav .dropdown').forEach(d => {
+                    d.classList.remove('show');
+                    const toggle = d.previousElementSibling;
+                    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+                });
+            }
+        });
+    
+        // Optional: Close dropdowns when pressing the Escape key
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.e36-nav .dropdown').forEach(d => {
+                    d.classList.remove('show');
+                    const toggle = d.previousElementSibling;
+                    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+                });
+            }
+        });
+    </script>    
+
+    <main>
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>
+                In 2022, I was inspired to transform my brother's replica GTR Skyline model into a functioning remote control (RC) vehicle. I purchased initial components, including an RS-775 drill motor, an H-bridge for motor control, and a LiPo battery. However, I quickly realized that the limited space within the small replica model made the project impractical.
+            </p>
+            <p>
+                A year later, I acquired a 3D printer to revive the idea, this time creating an RC replica of my own car, a 1992 E36 318is Coupe. However, I decided to upgrade the project to an M3 model—it’s much cooler, after all!
+            </p>
+        </section>
+
+        <section id="objectives">
+            <h2>Project Objectives</h2>
+            <p>I had several overarching objectives for the RC project, including:</p>
+            <ul>
+                <li><strong>Remote Control:</strong> As the name implies, the vehicle must be fully remote-controlled, allowing distant communication and visuals.</li>
+                <li><strong>Speed:</strong> The RC should be as fast as reasonably possible, considering cost and other limiting factors.</li>
+                <li><strong>DIY Approach:</strong> The RC must be predominantly created by myself.</li>
+                <li><strong>Automotive Features:</strong> The RC must incorporate additional features commonly found in typical automobiles.</li>
+                <li><strong>Design:</strong> The RC should be sleek and compact, discreetly masking its features.</li>
+            </ul>
+        </section>
+
+        <section id="overview">
+            <h2>Project Overview</h2>
+            <p>
+                The project officially began in May 2023 and is still ongoing, encountering numerous challenges addressed through several iterations while gaining valuable insights in the process.
+            </p>
+            <p>
+                The initial focus was on creating the shell of the E36 by manipulating a 3D scan of an M3. Since its inception, the RC's design size has remained consistent. The shell was scaled to 400 mm in length, representing a 1:11.0825 scale of the real-life vehicle. This scale is somewhat unconventional, as later discovered when sourcing common RC parts. However, it was chosen to provide sufficient onboard space for electrical and mechanical components while also allowing the shell to be printed in two separate pieces. This approach accommodated the 3D printer’s bed size constraints of 220 mm, with the pieces later joined to assemble the full shell.
+            </p>
+            <p>
+                I will attempt to run you through, retrospectively, the iterations thus far of the E36 RC and Controller.
+            </p>
+        </section>
+
+        <section id="iterations">
+            <h2>RC Iterations</h2>
+
+            <article id="iteration-1">
+                <h3>Iteration 1.0</h3>
+                <p>
+                    Iteration 1.0 included several revisions within versions. I’ve compiled all video recordings of the iterations and will try to detail as much as possible about the features included while recollecting the thought process behind certain implementations and/or changes.
+                </p>
+
+                <article id="iteration-1-1">
+                    <h4>Iteration 1.1</h4>
+                    <p>
+                        Iteration 1.1 began with the intention of minimizing costs which limited objectives and ultimately evolved into an expensive venture progressing through the project.
+                    </p> 
+
+                    <section id="iteration-1-1-1">
+                        <h4>Iteration 1.1.1</h4>
+                        <p>
+                            This appears to be my first design. It seems like I gathered a good portion of the necessary parts without much detail or thought. The model uses the RS-775 drill motor, an H-bridge, and a stepper motor initially purchased. I also planned to implement a speaker, as evidenced by the black speaker case intended for a UART MP3 player and a 1W 8 ohm speaker previously created. It also incorporated an Arduino Nano and breadboard. At this stage, there was no intention to include suspension due to additional costs. The design features a basic rack-and-pinion system with minimal detail regarding its connection, except for its attachment to the stepper motor and drive. The power supply was a basic battery pack, assumed at the time to provide sufficient power but, in hindsight, was far from adequate. Overall, this iteration is an early concept design as I began to delve deeper into the project.
+                        </p>
+                        <div class="gallery">
+                            <div class="media-item video-group-landscape">
+                                <div class="media-container">
+                                    <div class="video-wrapper">
+                                        <video class="controlled-video" controls muted autoplay>
+                                            <source src="RC-Videos/Iteration 1.1/E36 Iteration 1.1.1 v23_ (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-12-10.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                    <p class="media-caption">RC Iteration 1.1.1 CAD</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="iteration-1-1-2">
+                        <h4>Iteration 1.1.2</h4>
+                        <p>
+                            In this iteration, I appear to have done more research and spawned new ideas. Introducing the proposed telemetry through a LoRa SX 1278. The power system was expanded to include 2 x 9V batteries for new rear, front indicators, and front lights powered by 3V LEDs. The main power source was upgraded to what seems to be a 3S LiPo battery (though I’m not entirely certain).
+                        </p>
+                        <p>
+                            I remember encountering difficulties determining motor specifications at the time. Additional levels were added to accommodate more components and optimize space constraints. The RS-775 motor was now mounted, driving a worm gear and a ~30-tooth spur gear to the drive shaft
+                        </p>
+                        <div class="gallery">
+                            <div class="media-item video-group-landscape">
+                                <div class="media-container">
+                                    <div class="video-wrapper">
+                                        <video class="controlled-video" controls muted autoplay>
+                                            <source src="RC-Videos/Iteration 1.1/E36 Iteration 1.1.2 v2_ (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-13-23.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                        </video>
+                                        <p class="media-caption">RC Iteration 1.1.2 CAD</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section> 
+                    
+                    <section id="iteration-1-1-3">
+                        <h4>Iteration 1.1.3</h4>
+                        <p>
+                            This iteration introduced more ideas, some of which made it to the final design—such as the RC cameras. I purchased the 1000TVL cameras and TS582 transmitter seen in the model, complimented on the controller side with a RC832 receiver, 7” LCD, and AV LCD driver. The front camera was to be mounted on two servos which would rotate in yaw and pitch. However, the steering mechanism and cluster additions seen in this version were far too small to replicate with a 3D printer.
+                        </p>
+                        <p>
+                            The cluster was modeled after an E36 dash and it was intended to be fully functioning. Tiny stepper motors were purchased to actuate the dials to fit behind. While, 0402 LEDs were purchased for backlighting and indicators. Speed and RPM would be measured at the shaft via a photo interrupter and slotted disc connected to the shaft. While, fuel and temp would interpret shunt resistor and DHT11 sensor readings. Meanwhile, the steering wheel would be connected to the steering mechanism to turn in tandem with the stepper.
+                        </p>
+                        <div class="gallery">
+                            <div class="media-item video-group-landscape">
+                                <div class="media-container">
+                                    <div class="video-wrapper">
+                                        <video class="controlled-video" controls muted autoplay>
+                                            <source src="RC-Videos/Iteration 1.1/E36 Iteration 1.1.3 v11_ (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-14-25.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                        </video>
+                                        <p class="media-caption">RC Iteration 1.1.3 CAD</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section> 
+                </article>
+
+            <article id="iteration-1-2">
+                <h3>Iteration 1.2</h3>
+                <p>
+                    Significant changes marked the next milestone, Iteration 1.2.
+                </p>
+
+                <section id="iteration-1-2-1">
+                    <h4>Iteration 1.2.1</h4>
+                    <p>
+                        The motor was replaced with 2 x F540 4370kv motors, which remain in the final build. The motors were powered by two separate LiPo batteries and paired with respective ESCs (represented by white rectangular placeholder blocks).
+                    </p>
+                    <p>
+                        Conceptual suspension designs emerged at this stage, with an initial attempt to create a homemade solution. The drive system was changed to a high gear ratio powering a drivetrain, which transferred power to the drive shaft through helical gears.
+                    </p>
+                    <div class="gallery">
+                        <div class="media-item video-group-landscape">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 1.2/E36 Iteration 1.2.1 v8_ (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-16-33.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">RC Iteration 1.2.1 CAD</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section  id="iteration-1-2-2">
+                    <h4>Iteration 1.2.2</h4> 
+                    <p>
+                        This version aimed to reduce lag in Fusion, exporting only necessary items and excluding archival components. The only visible difference was an attempt to raise the drivetrain height.
+                    </p>
+                    <div class="gallery">
+                        <div class="media-item video-group-landscape">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 1.2/E36 Iteration 1.2.2 v3_ (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-17-46.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">RC Iteration 1.2.1-2 CAD</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="iteration-1-2-3">
+                    <h4>Iteration 1.2.3</h4> 
+                    <p>
+                        This iteration included a front suspension design which used off-the-shelf components, though these were never purchased. The rack-and-pinion system showed improvement, and the motors were repositioned upward to make space for a differential.
+                    </p>
+                    <div class="gallery">
+                        <div class="media-item video-group-landscape">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 1.2/E36 Iteration 1.2.3 v19_ (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-19-45.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">RC Iteration 1.2.3 CAD</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="iteration-1-2-4">
+                    <h4>Iteration 1.2.4</h4> 
+                    <p>
+                        This iteration appears identical to 1.2.3, either a duplicate or intentionally created to reduce lag.
+                    </p>
+                    <div class="gallery">
+                        <div class="media-item video-group-landscape">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 1.2/E36 Iteration 1.2.4 v4_ (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-21-24.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">RC Iteration 1.2.3-4 CAD</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </article> 
+
+            <section id="iteration-1-3">
+                <h3>Iteration 1.3</h3> 
+                <p>
+                    This iteration focused on refining details in the existing design, including a more refined front suspension setup and control arms. Suspension components that were eventually purchased were introduced in this iteration, 1603-BZ01 (red shocks).
+                </p>
+                <p>
+                    A controllable spoiler, operated by a servo, was added but later discontinued and never tested. The differential also took a more feasible form. The LiPo batteries and ESCs were selected, purchased and designed into the model
+                </p>
+                <p>
+                    The wheels, including rims and tires, were modeled to be 3D printed. The rear wheel hub assembly, which connects the rear wheels, was designed similarly to the current version. Universal couplings were added to address concerns about height changes due to suspension compression and decompression. Side indicators were added. The proposed speaker and case was removed, as well as the rear camera. 
+                </p>
+                <div class="gallery">
+                    <div class="media-item video-group-landscape">
+                        <div class="media-container">
+                            <div class="video-wrapper">
+                                <video class="controlled-video" controls muted autoplay>
+                                    <source src="RC-Videos/Iteration 1.3/New E36 Clean Up RC v36 (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-23-00.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                                </video>
+                                <p class="media-caption">RC Iteration 1.3 CAD</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="iteration-1-4">
+                <h3>Iteration 1.4</h3> 
+                <p>
+                    Significant progress was made. The rack-and-pinion mechanism was replaced with M2 threaded rods, tie rods, and a servo for control. Front control arms were designed but proved too flexible due to insufficient lateral constraints. A roll cage was added.
+                </p>
+                <p>
+                    Two 12W mini speakers, amplifier, 1S batteries were purchased and included in the model. The 1S LiPos were proposed to create a custom 7S battery pack to power the speakers, but instead opted down the track for an off-the-shelf battery. The cluster and steering wheel was tested and removed. This iteration was the first to be 3D-printed around Christmas 2023.
+                </p>
+                <div class="gallery">
+                    <div class="media-item video-group-landscape">
+                        <div class="media-container">
+                            <div class="video-wrapper">
+                                <video class="controlled-video" controls muted autoplay>
+                                    <source src="RC-Videos/Iteration 1.4/New E36 Clean Up RC Suspension Redirection v85_ (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-28-01.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                                </video>
+                                <p class="media-caption">RC Iteration 1.4 CAD</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <article id="iteration-2">
+                <h2>Iteration 2.0</h2> 
+                <p>
+                    Iterations 2.0, the first version starts at 2.0 (don't know why), however, marks the first version after the initial prints, requiring significant changes.
+                </p>
+
+                <section id="iteration-2-0">
+                    <h3>Iteration 2.0</h3> 
+                    <p>
+                        Testing highlighted areas for improvement. Wires and unmodeled components were difficult to organize, prompting greater addition of inserts and cutouts. Coin cell batteries were reduced or relocated. Electrical components were better contained. The differential could not be printed at its scale due to fragility and the differential was removed due to printing constraints and replaced with much simpler bevel gears. A roll cage was added
+                    </p>
+                    <div class="gallery">
+                        <div class="media-item video-group-landscape">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.0/E36 RC 2.0 v18 (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-34-20.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">RC Iteration 2.0 CAD</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="iteration-2-1">
+                    <h3>Iteration 2.1</h3> 
+                    <p>
+                        A gear case was added to reduce debris and allow for lubrication. The drive mechanism was straightened, using an M0.5 worm gear to transfer power to a spur gear.
+                    </p>
+                    <div class="gallery">
+                        <div class="media-item video-group-landscape">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.1/E36 RC 2.1 v13 (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-32-02.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">RC Iteration 2.1 CAD</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery">
+                        <div class="media-item image-group-portrait">
+                            <img src="RC-Videos/Iteration 2.1/[2.1] 200124.jpg" alt="">
+                            <img src="RC-Videos/Iteration 2.1/[2.1] 230124 1.jpg" alt="">
+                        </div>
+                    </div>
+                    <div class="gallery">
+                        <div class="media-item image-group-landscape">
+                            <img src="RC-Videos/Iteration 2.1/[2.1] 230124.jpg" alt="">
+                        </div>
+                    </div>
+                </section>
+
+                <section id="iteration-2-2">
+                    <h3>Iteration 2.2</h3> 
+                    <p>
+                        Testing revealed that the suspension was too weak, with the mounts poorly positioned to handle force loading. To improve leverage, the mounts were relocated closer to the tires.
+                    </p>
+                    <p>
+                        The shocks had a measured spring rate of approximately 285.7 g/mm and required two shocks per wheel to prevent the RC vehicle from bottoming out. Calculations were performed to optimize the spring ratios for the front and rear suspension based on weight, center of gravity (COG), and loading conditions, manipulating shock angle and mounting position.
+                    </p>
+                    <p>
+                        Additionally, an initial concept for the front suspension involved stacking two springs, as housing both shocks side by side proved challenging with the steering mechanism.
+                    </p>
+                    <div class="gallery">
+                        <div class="media-item video-group-landscape">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.2/E36 RC 2.2 v9 (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-37-26.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                                <p class="media-caption">RC Iteration 2.2 CAD</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery">
+                        <div class="media-item image-group-landscape">
+                            <img src="RC-Videos/Iteration 2.2/[2.2] 020124 1.jpg" alt="">
+                            <img src="RC-Videos/Iteration 2.2/[2.2] 020124 2.jpg" alt="">
+                        </div>
+                    
+                        <div class="media-item image-group-portrait">
+                            <img src="RC-Videos/Iteration 2.2/[2.2] 020124.jpg" alt="">
+                        </div>
+                    </div>
+                    <h4>Iteration 2.2 Testing</h4>
+                    <h5>Iteration 2.2 Drivetrain Testing</h5>        
+                    <p>
+                        This iteration experienced multiple drivetrain and gear failures. PLA gears, as seen in the images, were unsuitable and required frequent replacement due to excessive wear. The gears endured significant stress, rotating at high RPMs, with inefficiencies generating heat that worsened wear.
+                    </p>
+                    <p>
+                        The drivetrain used a brass M.5 Worm Gear, which exhibited contact issues with the driven gear. These were improved through tighter tolerances and by clamping the top of the driven case. Additionally, securing the gears was challenging and required hot glue.
+                    </p>
+                    <div class="gallery">
+                        <div class="media-item image-group-portrait">
+                            <img src="RC-Videos/Iteration 2.2/[2.2] 240224 PLA_Gear_Wear.jpg" alt="">
+                            <img src="RC-Videos/Iteration 2.2/[2.2] 160224 Gear Wear 1.jpg" alt="">
+                            <img src="RC-Videos/Iteration 2.2/[2.2] 160224 Drive Shaft Failure.jpg" alt="">
+                        </div>
+                    </div>
+                    <div class="gallery">
+                        <div class="media-item video-group-portrait">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.2/[2.2] 160224 Drive Train Problems 1.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                                <p class="media-caption">Drivetrain Tolerance Problems</p>
+                            </div>
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.2/[2.2] 160224 Drive Train Problems 2.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                                <p class="media-caption">Loose Drivetrain</p>
+                            </div>
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.2/[2.2] 160224 Drive Train.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                                <p class="media-caption">Drivetrain Problems</p>
+                            </div>
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.2/[2.2] 160224 Free Spinning.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                                <p class="media-caption">RIP 3D-Printed Gears</p>
+                            </div>                           
+                        </div>
+                        <div class="media-item video-group-landscape">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.2/[2.2] 160224 Gear Problems 1.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                                <p class="media-caption">Revving</p>                                   
+                            </div>
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.2/[2.2] 160224 Gear Problems 2.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                                <p class="media-caption">Nice Knowing You Gear</p>                                   
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="iteration-2-3">
+                    <h3>Iteration 2.3</h3>
+                    <p>
+                        Front suspension was remodeled after discovering lateral weakness. Design changes prevented uncontrolled wheel rotation.
+                    </p>
+                    <p>
+                        Plastic 3D-printed gears were replaced with metal M1 spur gears to handle power without frequent replacement. A large M1 worm gear was purchased to step down the gear ratio while maintaining drivetrain height.
+                    </p>
+                    <div class="gallery">
+                        <div class="media-item video-group-portrait">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.3/E36 RC 2.3 v8_ (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-40-34.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">RC Iteration 2.3 CAD</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery">
+                        <div class="media-item image-group-portrait">
+                            <img src="RC-Videos/Iteration 2.3/[2.3] 040124.jpg" alt="">
+                            <img src="RC-Videos/Iteration 2.3/[2.3] 040124 1.jpg" alt="">
+                        </div>
+                    </div>
+                    <h4>Iteration 2.3 Testing</h4>
+                    <h5>Iteration 2.3 Drivetrain Testing</h5>
+                    <p>
+                        Metal spur gears were purchased, but they didn’t fit the obscure motor shaft dimensions, necessitating a 3D-printed adapter. Several iterations were made to achieve tighter tolerances, but problems persisted with securing the gears. Backlash issues were significant, compounded by difficulties in printing the drive shaft straight. This amplified vibration and led to eventual failures of the drive shaft and/or adapter pieces. Better results were observed after removing ball bearings and gear alignment inserts, but challenges remained.
+                    </p>
+                    <div class="gallery">
+                        <div class="media-item image-group-portrait">
+                            <img src="RC-Videos/Iteration 2.3/[2.3] 240324 Drive Train Failure.jpg" alt="">
+                        </div>
+                    </div>
+                    <div class="gallery">
+                        <div class="media-item video-group-portrait">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.3/[2.3] 070324 Driving Axle Misalignment 2.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">Drivetrain Print v1 Problems</p>                                   
+                                </div>
+                            </div>
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.3/[2.3] 230324 Driving Axle Misalignment 1.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">Drivetrain Print v2 Problems</p>                                   
+                                </div>
+                            </div>
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.3/[2.3] 230324 Gear Clashing.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">Drivetrain Misalignment</p>                                   
+                                </div>
+                            </div>
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.3/[2.3] 230324 Gear Misalignment 3.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">Drivetrain Misalignment</p>                                   
+                                </div>
+                            </div>
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.3/[2.3] 290324 Drive Test.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">Drive Testing</p>                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="media-item video-group-portrait">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.3/[2.3] 070324 Motor Coupling Failure.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">Gear Coupling Problems</p>                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h5>Iteration 2.3 Steering Testing</h5>
+                    <p>
+                        Testing revealed that the initial arrangement for the front wheel control arms were far too weak, offering no lateral support, as shown in the videos.
+                    </p>
+                    <div class="gallery">
+                        <div class="media-item video-group-portrait">
+                          <div class="media-container">
+                            <div class="video-wrapper">
+                              <video class="controlled-video" controls muted autoplay>
+                                <source src="RC-Videos/Iteration 2.3/2.3 040424 Flimsy Steering 1.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                              </video>
+                            </div>
+                            <p class="media-caption">Flimsy Steering</p>
+                          </div>
+                          <div class="media-container">
+                            <div class="video-wrapper">
+                              <video class="controlled-video" controls muted autoplay>
+                                <source src="RC-Videos/Iteration 2.3/2.3 040424 Flimsy Steering 2.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                              </video>
+                            </div>
+                            <p class="media-caption">Flimsy Steering Closer Inspection</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <h5>Iteration 2.3 Camera Testing</h5>
+                    <p>
+                        The front camera was assembled using adapter pieces to two servos. The servos were programmed with angle limits controllable via a joystick. Initial issues with power constraints were later resolved using motor batteries.
+                    </p>
+                    <div class="gallery">                    
+                        <div class="media-item video-group-portrait">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.3/[2.3] 110324 Cameras.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">Camera Movement Testing</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="iteration-2-4">
+                    <h3>Iteration 2.4</h3>
+                    <p>
+                        The custom 7S LiPo was replaced with an off-the-shelf product due to fitment issues. Front suspension was further strengthened, and the steering mechanism was widened to improve aesthetics and functionality. Transceivers and additional buttons were fitted, and speakers were powered by 2x 3S LiPos.
+                    </p>
+                    <div class="gallery">
+                        <div class="media-container">
+                            <div class="video-wrapper">
+                                <video class="controlled-video" controls muted autoplay>
+                                    <source src="RC-Videos/Iteration 2.4/E36 RC 2.4 v3 (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-43-18.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                                </video>
+                                <p class="media-caption">RC Iteration 2.4 CAD</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery">
+                        <div class="media-item image-group-landscape">
+                            <img src="RC-Videos/Iteration 2.4/2.4 2.JPG" alt="">
+                            <img src="RC-Videos/Iteration 2.4/2.4 1.JPG" alt="">
+                            <img src="RC-Videos/Iteration 2.4/2.4 3.JPG" alt="">
+                        </div>
+                    </div>
+                    <h4>Iteration 2.4 Testing</h4>
+                    <h5>Iteration 2.4 Drivetrain Testing</h5>
+                    <p>
+                        Despite improvements, drivetrain and gear issues persisted. Adapter pieces were difficult to secure, and excessive vibrations and misalignment caused failures. An extension piece was added to the drive shaft along with a slotted rotor disc and a photointerrupter to read RPM and measure speed. However, this idea was short-lived, as vibrations caused the two halves of the bottom base to slide, leading to the slotted rotor disc shearing across the photointerrupter face
+                    </p>
+                    <div class="gallery">
+                        <div class="media-item image-group-portrait">
+                            <img src="RC-Videos/Iteration 2.4/[2.4] 150624 Failure 1.JPG" alt="">
+                            <img src="RC-Videos/Iteration 2.4/[2.4] 150624 Failure 3.JPG" alt="">
+                        </div>
+                        <div class="media-item image-group-landscape">
+                            <img src="RC-Videos/Iteration 2.4/[2.4] 150624 PhotoInterrupter 1.JPG" alt="">
+                        </div>
+                    </div>
+                    <div class="gallery">
+                        <div class="media-item video-group-landscape">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.4/[2.4] 200624 Gear Failure 1.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">Gear Problems</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                    <h5>Iteration 2.4 Steering Testing</h5>
+                    <p>
+                        Front wheel control arms, tie rods were rearranged to operate under tension. When securely tightened, they provided significant support, along with the steering linkage. However, the tires were significantly misaligned, necessitating modifications to the wheel assembly, thickening the wheel hub to house two ball bearings to straighten the shaft to the front wheel.
+                    </p>
+                    <div class="gallery">                  
+                        <div class="media-item video-group-portrait">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.4/2.4 080424 Steering 1.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">Steering Test</p>
+                                </div>
+                            </div>
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.4/2.4 050424 Tyre Misalignment.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">Steering Test</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>      
+                    <h5>Iteration 2.4 Remote Control Testing</h5>
+                    <p>
+                        Initial control was notably clunky, with impaired functions. Driving and reversing were unresponsive at times; actuating the joystick often resulted in motors either not engaging, unintentionally engaging, and/or getting stuck in drive.
+                    </p>
+                    <p>
+                        The problem lay in the communication between the transceivers there was excessive noise. This was resolved by fine-tuning to eliminate errors, ensuring sufficient bandwidth for messages while optimizing message rate. As well as, playing around with frequencies. Additional measures were implemented to decode messages effectively.
+                    </p>  
+                    <div class="gallery">                  
+                        <div class="media-item video-group-landscape">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.4/Buggy Transreceiver.MOV" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">Remote Control Problems</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                      
+                </section>
+
+                <section id="iteration-2-5">
+                    <h3>Iteration 2.5</h3>
+                    <p>
+                        The drivetrain was redesigned with a cog-and-belt setup to address backlash and vibration issues. Motor positions were made adjustable with hand-tightened bolts. The video also captures the height adjustability of the drivetrain, which was actually introduced in Iteration 2.6.
+                    </p>
+                    <div class="gallery">
+                        <div class="media-item video-group-landscape">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.5/E36 RC 2.5 v4 (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-45-27.mp4" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">RC Iteration 2.5 CAD</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery">
+                        <div class="media-item image-group-landscape">
+                            <img src="RC-Videos/Iteration 2.5/2.5 130924 .JPG" alt="">
+                        </div>
+                    </div>  
+                    <h4>Iteration 2.5 Testing</h4>
+                    <h5>Iteration 2.5 Remote Control Testing</h5>
+                    <p>
+                        The control system was now functional enough to allow for remote operation and driving of the vehicle. The camera features were set up and powered by the motor’s LiPo battery, providing sufficient current for snappy and consistent movement. The camera transmitted an onboard display of the RC vehicle to the controller’s LCD. However, the LCD was partially broken, likely due to mishandling at some point.                    </p>
+                    <p>
+                        The RC vehicle experienced significant traction issues on the smooth wooden floor when using the 3D-printed TPU VarioShore filament tires. The 3D-printed tires were softer and grippier than standard 3D-printed plastics, thanks to VarioShore, which incorporates baking soda that expands and softens when printed at higher temperatures. Despite this, the 3D-printed tires were preferred for their customizability and self-made design but require softer materials through off-the-shelf tires.                    </p>
+                    <p>
+                        Another persistent issue is the drivetrain creating significant vibration. While less apparent in this iteration, the RC vehicle has been equipped with a slightly modified drivetrain that uses cogs and belts to eliminate backlash. The belt tension is adjustable via motor mounting positions. However, the drivetrain is still not perfectly straight, with slight misalignment and fitment issues.
+                    </p>
+                    <div class="gallery">    
+                        <div class="media-item video-group-portrait">
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.5/2.5 1.MOV" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">Drive Test Off Ground</p>
+                                </div>
+                            </div>
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.5/2.5 2.MOV" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">Camera Test</p>
+                                </div>
+                            </div>
+                            <div class="media-container">
+                                <div class="video-wrapper">
+                                    <video class="controlled-video" controls muted autoplay>
+                                        <source src="RC-Videos/Iteration 2.5/2.5 3.MOV" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                    <p class="media-caption">Drive Test</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </section>
+                <section id="iteration-2-6">
+                    <h3>Iteration 2.6</h3>
+                    <p>
+                        Iteration 2.6 is the current version in progress. The RC vehicle has since been fitted with similarly sized off-the-shelf tires, but the wheel wells will need to be raised to provide clearance for the new tires. Additionally, to accommodate the wheels, the wheel hubs have been slightly modified to ensure locks through inserts. The adjustable drive train height has been added to the design, allowing the user to mount the optimal height and fit of the drivetrain to reduce vibrations. 
+                    </p>
+                </section>
+            </article>
+        </section>
+        <section id="controller-iterations">
+            <h2>Controller Iterations</h2>
+            <section id="controller-iteration-1">
+                <h3>Controller Iteration 1.0</h3>
+                <p>
+                    The initial concept design for the remote control began with implementing the desired features. A 7” LCD was integrated with its driver connected. Left and right joysticks were added to control specific functions: the left joystick managed steering, drive, and hazard lights, while the right joystick controlled the camera view position (yaw and pitch) and horn feature. A single potentiometer was included, likely intended to control the music volume, along with three buttons presumed to handle skip, rewind, and pause music functionalities.
+                </p>
+                <p>
+                    The control was taking shape. Arduino Nano microboards were configured as the transmitter and receiver, each connected to a respective transceiver. An H-bridge was implemented, apparently not connected to a motor at this stage. It seems this was intended to actuate the LCD angle. The LCD would be connected to a rail system and worm drive mechanism. The bottom of the LCD appeared to be a pivot point, with the rail connected to the top portion of the LCD via ball bearings, enabling angular adjustments. Power was sourced from multiple batteries: two 3S LiPos would power the RC832 and LCD, one 1S LiPo powered the transceivers, and two coin cell batteries would power the microcontrollers. The controller was 3D-printed, and while the LCD was tested, it required additional space for proper functionality.
+                </p>
+                <div class="gallery">
+                    <div class="media-item video-group-landscape">
+                        <div class="media-container">
+                            <div class="video-wrapper">
+                                <video class="controlled-video" controls muted autoplay>
+                                    <source src="Controller-Videos/Iteration 1.0/RC Controller v14_ (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-00-54.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="media-caption">Controller Iteration 1.0 CAD</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery">
+                    <div class="media-item image-group-landscape">
+                        <img src="Controller-Videos/Iteration 1.0/Controller 1.0.jpg" alt="">
+                    </div>
+                    <div class="media-item image-group-portrait">                    
+                        <img src="Controller-Videos/Iteration 1.0/RC LCD Testing.jpg" alt="">
+                    </div>
+                </div>
+            </section>
+            <section id="controller-iteration-2">
+                <h3>Controller Iteration 2.0</h3>
+                <p>
+                    Iteration 2.0 introduced a larger, more detailed design. The controller consisted of two compartments to accommodate the required wiring and components. The top plate, featuring joysticks and buttons, began to resemble a PlayStation controller. The button layout was conceptualised as follows: Left-left: Left indicator, Left-up: Music track up, Left-right: Right indicator, Left-down: Music track down, Right-left: Switch tachometer LCD screens, Right-up: LCD angle up, Right-right: Spare (now RMC2 reset), Right-down: LCD angle down.
+                </p>
+                <p>
+                    An additional potentiometer was added to adjust the brightness of the RC LEDs. Indicator buttons were paired with orange 0402 LEDs to visually display their states.
+                </p>
+                <p>
+                    The tachometer LCD would display on-board data collected by the RC Transmitter Microcontroller Board (TMC2) and transmitted via a receiver to the Receiver Microcontroller Board (RMC2).
+                </p>
+                <p>
+                    A control panel for the LCD was added (not shown in the video), allowing adjustment of LCD settings. Cutouts were made for RC832 wires to pass through compartments, as space constraints necessitated external routing. 
+                </p>
+                <p>
+                    The LCD mechanism was upgraded to include a 3–6V micro-geared DC motor. This motor, secured to a mount with screws, drove a shaft connecting separate left and right worm gears, which engaged with the toothed arms of the LCD. The worm gears were designed to allow the user to manually override the motor, utilizing the higher gear ratio to adjust the LCD’s position via dials. However, a significant issue was identified: the worm gears were not reversible. While the motor could drive the worm gears using an H-bridge and buttons, the design was tested and found to be ineffective. The LCD was not correctly positioned to maintain constant contact between its toothed arms and the worm gears.
+                </p>
+                <p>
+                    1S LiPo batteries were replaced with coin cell batteries that were thought to be sufficient, however, later switched back to LiPo batteries that had the required current. Electrical components were connected and tested including the top plate buttons, joystick and potentiometer.
+                </p>
+                <div class="gallery">
+                    <div class="media-item video-group-landscape">
+                        <div class="media-container">
+                            <div class="video-wrapper">
+                                <video class="controlled-video" controls muted autoplay>
+                                    <source src="Controller-Videos/Iteration 2.0/RC Controller 2.0 v41_ (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 10-58-42.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="media-caption">Controller Iteration 2.0 CAD</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery">
+                    <div class="media-item image-group-landscape">
+                        <img src="Controller-Videos/Iteration 2.0/Iteration 2.1 Assembled Cable Tray.JPG" alt="">
+                    </div>
+                    <div class="media-item image-group-portrait">
+                        <img src="Controller-Videos/Iteration 2.0/Iteration 2.1 Assembled 3.JPG" alt="">
+                        <img src="Controller-Videos/Iteration 2.0/Iteration 2.1 Assembled 4.JPG" alt="">
+                    </div>
+                </div>
+                <div class="gallery">
+                    <div class="media-item video-group-landscape">
+                        <div class="media-container">
+                            <div class="video-wrapper">
+                                <video class="controlled-video" controls muted autoplay>
+                                    <source src="Controller-Videos/Iteration 2.0/Iteration 2.1 Buttons.MOV" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="media-caption">Button Testing</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="controller-iteration-3">
+                <h3>Controller Iteration 3.0</h3>
+                <p>
+                    In this version, the controller underwent reorganization and was fully assembled and functional, though it revealed several issues that would be addressed in Iteration 4.0. 
+                </p>
+                <p>
+                    This iteration catered towards space efficiency and organization by adding baffles to separate and store RC832 and LCD driver cables more effectively. Additional cutouts were introduced to facilitate easier wire routing. Coin cell batteries were replaced with 1S LiPos and a 9V battery for the H-bridge. Tension brackets were added to address gaps caused by 3D printing imperfections.
+                </p>
+                <p>
+                    The LCD mechanism was slightly adjusted, repositioning the LCD to ensure it could pivot and remain in contact with a spur gear instead of the worm gear. The manual control was still in the design. However, issues arose from 3D printing inaccuracies: the controller cutouts interfered with the LCD arms, the arms were difficult to print, and securing the motor shaft in the resin-printed shaft proved challenging. Despite these LCD-related problems, assembly of the controller continued.
+                </p>
+                <p>
+                    The RMC2 and TMC2 microcontrollers were wired and coded, enabling remote control of the vehicle and onboard diagnostics for the RC, which was not yet connected.
+                </p>
+                <div class="gallery">
+                    <div class="media-item video-group-landscape">
+                        <div class="media-container">
+                            <div class="video-wrapper">
+                                <video class="controlled-video" controls muted autoplay>
+                                    <source src="Controller-Videos/Iteration 3.0/RC Controller 3.0 v2_ (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 10-54-46.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                                </video>
+                                <p class="media-caption">Controller Iteration 3.0 CAD</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery">
+                    <div class="media-item image-group-portrait">
+                        <img src="Controller-Videos/Iteration 3.0/Iteration 3.0 08182024 2.JPG" alt="">
+                        <img src="Controller-Videos/Iteration 3.0/Iteration 3.0 111824 Assembled 2.JPG" alt="">
+                        <img src="Controller-Videos/Iteration 3.0/Iteration 3.0 111824 Assembled 1.JPG" alt="">
+                        <img src="Controller-Videos/Iteration 3.0/Iteration 3.0 Broken LCD.JPG" alt="">
+                        <img src="Controller-Videos/Iteration 3.0/Iteration 3.0 LCD Mechanism.JPG" alt="">
+                    </div>
+                </div>
+                <div class="gallery">
+                    <div class="media-item video-group-landscape">
+                        <div class="media-container">
+                            <div class="video-wrapper">
+                                <video class="controlled-video" controls muted autoplay>
+                                    <source src="Controller-Videos/Iteration 3.0/Iteration 3.0 08182024 Receiver LCD.mov" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="media-caption">Receiver LCD Testing</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="media-item video-group-portrait">
+                        <div class="media-container">
+                            <div class="video-wrapper">
+                                <video class="controlled-video" controls muted autoplay>
+                                    <source src="Controller-Videos/Iteration 3.0/Iteration 3.0 091324.MOV" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="media-caption">Indicators and Hazard Testing</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="controller-iteration-4">
+                <h3>Controller Iteration 4.0</h3>
+                <p>
+                    This iteration brought several optimisations. 
+                </p>
+                <div class="gallery">
+                    <div class="media-item video-group-landscape">
+                        <div class="media-container">
+                            <div class="video-wrapper">
+                                <video class="controlled-video" controls muted autoplay>
+                                    <source src="Controller-Videos/Iteration 4.0/Controller 4.0 v13_ (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-05-23.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="media-caption">Controller Iteration 4.0 CAD with Relay</p>
+                            </div>
+                        </div>
+                        <div class="media-container">
+                            <div class="video-wrapper">
+                                <video class="controlled-video" controls muted autoplay>
+                                    <source src="Controller-Videos/Iteration 4.0/Controller 4.0 (Revised LCD) 3 v37_ (Team Mitch) - Autodesk Fusion (Education License)  2024-12-01 11-09-16.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p class="media-caption">Controller Iteration 4.0 CAD Current</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery">
+                    <div class="media-item image-group-landscape">
+                        <img src="Controller-Videos/Iteration 4.0/Iteration 4.0 Removed Relay.JPG" alt="">
+                    </div>
+                    <div class="media-item image-group-portrait">
+                        <img src="Controller-Videos/Iteration 4.0/Iteration 4.0.JPG" alt="">
+                    </div>
+                </div>
+                <p><strong>Space</strong></p>
+                <p>
+                    Although spacious in CAD, the previous design lacked sufficient room during assembly seen with the clutter of wires and cabling. The controller was made slightly wider and taller, incorporating racks for unused vertical space. RC832 cables can now run inside the controller.
+                </p>
+                <p><strong>Organization</strong></p>
+                <p>
+                    Component placement was previously dictated by space constraints, making assembly and disassembly cumbersome. In the new design:
+                </p>
+                <ul>
+                    <li>
+                        All batteries are stored in the bottom compartment near switches.
+                    </li>
+                    <li>
+                        Transceivers and microcontrollers are positioned closer to buttons and sensors, reducing wiring complexity.
+                    </li>
+                    <li>
+                        The bottom compartment now includes push-connector terminals, enabling quick disconnection and reassembly.
+                    </li>
+                </ul>
+                <p><strong>Battery Levels</strong></p>
+                <p>
+                    Monitoring battery levels is now simpler. Batteries are accessible externally through cutouts covered with pop-out panels, allowing users to check voltages with a voltmeter or replace batteries with ease.
+                </p>
+                <p><strong>Fewer Batteries</strong></p>
+                <p>
+                    The number of batteries was reduced by running similar power supplies in parallel, improving both space and wiring.
+                </p>
+                <p><strong>Battery Converters</strong></p>
+                <p>
+                    Faulty step-up converters from the previous design caused voltage spikes. These have been replaced with reliable step-up converters, allowing 1S LiPo batteries to power the microcontrollers at 5V.
+                </p>
+                <p><strong>Diagnostics</strong></p>
+                <p>
+                    Previously, diagnosing microcontroller freezes was challenging. Each microcontroller now includes an LCD to display status updates, showing code progress and connection states.
+                </p>
+                <p><strong>Microcontroller Access</strong></p>
+                <p>
+                    Both microcontrollers are now housed in the same compartment, with cutouts for easy cable connections, diagnostics, and firmware updates.
+                </p>
+                <p><strong>New LCD</strong></p>
+                <p>
+                    The previous 7” LCD broke and displayed only half the screen. It was replaced with a fully functional 7” LCD and a 1080 x 720 resolution driver. An AV-to-HDMI converter processes the RC camera feed.
+                </p>
+                <p><strong>LCD Mechanism</strong></p>
+                <p>
+                    The LCD angle adjustment mechanism was simplified. Manual adjustment via worm gears was removed, leaving motorized adjustments controlled by buttons.
+                </p>
+                <p><strong>Code Changes</strong></p>
+                <p>
+                    The updated code now bypasses connection hold points, allowing the controller to function independently while maintaining compatibility with the RC system.
+                </p>
+                <p>
+                    The controller initially used an electrical relay to switch loads and interpret voltage levels through a stunt sensor. However, this approach was removed, and it was concluded that these tasks would be completed manually using cutouts and a voltmeter.
+                </p>
+            </section>
+        </section>
+    </main>
+    <script src="../scripts/video-volume.js"></script>
+
+</body>
+
+<footer>
+    <script src="../scripts/email-script.js"></script> 
+    <div id="footer-links-container"></div>
+    <script src="../footer/footer-links.js"></script>  
+</footer>
+
+</html>

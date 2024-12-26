@@ -1,0 +1,397 @@
+/* Reset and Base Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f9;
+  color: #333;
+}
+
+header {
+  text-align: center;
+  border-bottom: 2px solid #ccc;
+  background-color: #f8f9fa;
+}
+
+/* Header Titles */
+h2, h3, h4, h5, h6 { 
+  position: relative; /* Allows pseudo-element positioning */
+  font-family: 'Arial', sans-serif; /* Example font */
+  font-weight: bold; /* Emphasize headers */
+  color: #333; /* Default text color */
+  margin-bottom: 1em; /* Adds spacing after headers */
+  text-transform: uppercase; /* Makes headers all caps */
+  padding: 0; /* Ensures no extra padding affects pseudo-element */
+}
+
+/* Underscore Effect */
+h2::after, h3::after, h4::after, h5::after, h6::after {
+  content: ""; /* Empty content for the pseudo-element */
+  position: absolute;
+  left: 0;
+  bottom: -5px; /* Distance from the text */
+  width: 100%; /* Matches the text length */
+  height: 3px; /* Thickness of the underscore */
+  background-color: #ff758c; /* Underscore color */
+}
+
+/* Optional: Hover Effect to Change Color or Thickness */
+h2:hover::after, h3:hover::after, h4:hover::after, h5:hover::after, h6:hover::after {
+  background-color: #3bb3ff; /* Change color on hover */
+}
+
+
+/* ------------- Updated Fixed Sticky Navigation Styling ------------- */
+.e36-nav {
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;         /* Standard syntax */
+  top: 0;                   /* Sticks to the top when scrolled */
+  width: 100%;              /* Span the full width */
+  background-color: #ffffff; /* Solid background to overlay content */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  display: flex;
+  justify-content: center;  /* Center align the navigation items */
+  align-items: center;      /* Vertically center items */
+  padding: 10px 0;          /* Vertical padding */
+  z-index: 10;            /* Ensures nav stays above other elements */
+}
+
+/* Navigation List Styling */
+.e36-nav .toc {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 20px; /* Space between navigation items */
+}
+
+/* Navigation Links Styling */
+.e36-nav .toc > li {
+  position: relative; /* For positioning dropdowns */
+}
+
+.e36-nav .toc a {
+  text-decoration: none;
+  padding: 10px 15px;
+  color: #333;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  background-color: #e8e8e8;
+  transition: background-color 0.3s, border 0.3s;
+}
+
+.e36-nav .toc a:hover {
+  background-color: #d6d6d6;
+  border-color: #999;
+}
+
+/* Dropdown Menu Styling */
+.e36-nav .dropdown {
+  display: none;
+  position: absolute;
+  top: 100%; /* Positions dropdown below the parent link */
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  border-radius: 8px;
+}
+
+/* Show Dropdowns When .show Class is Added */
+.e36-nav .dropdown.show {
+  display: block;
+}
+
+/* Dropdown Links Styling */
+.e36-nav .dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.e36-nav .dropdown a {
+  display: block;
+  padding: 10px 15px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+}
+
+.e36-nav .dropdown a:hover {
+  background-color: #f4f4f9;
+}
+
+/* Nested Dropdowns */
+.e36-nav .dropdown li {
+  position: relative;
+}
+
+.e36-nav .dropdown li:hover > .dropdown {
+  display: block;
+  left: 100%; /* Positions nested dropdown to the right */
+  top: 0;
+}
+
+/* Main Content Styling */
+main {
+  margin: 0 auto; /* Center the main content */
+  padding: 20px 20px 20px 20px; /* Increased top padding to account for header + nav */
+  max-width: 1200px; /* Optional: Limit max width */
+  background-color: #f4f4f9; /* Matches body background */
+}
+
+/* Gallery Layout */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  margin: 20px 0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Media Item Styling */
+.media-item {
+  flex: 1 1 calc(70% - 16px);
+  max-width: calc(100% - 16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+.media-item:hover {
+  transform: scale(1.025);
+}
+
+/* Media Container Styling */
+.media-container {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center;
+  justify-content: flex-start; /* Align items to the top */
+  gap: 12px; /* Space between video/image and caption */
+  text-align: center;
+  margin-top: 8px; /* Adds spacing above the caption */
+  width: 100%; /* Ensure full width for centering */
+}
+
+/* Caption Styling */
+.media-caption {
+  font-size: 14px;
+  color: #333;
+  text-align: center;
+  margin-top: 10px; /* Space above caption */
+  padding: 8px;
+  background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+  border-radius: 4px;
+  font-style: italic;
+}
+
+/* Videos */
+.media-item video {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+/* Image Group Styling */
+.image-group {
+  display: flex;
+  flex-wrap: wrap; /* Enables wrapping of images */
+  gap: 16px; /* Ensures spacing between images */
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+/* Portrait Images */
+.image-group-portrait {
+  display: flex;
+  flex-wrap: wrap; /* Enables wrapping for portrait images */
+  gap: 16px; /* Ensures spacing between portrait images */
+}
+
+.image-group-portrait img {
+  width: calc(25% - 16px); /* Each image takes up 25%, accounting for gap */
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+  display: block; /* Ensures images don't have unexpected inline spacing */
+}
+
+/* Landscape Images */
+.image-group-landscape {
+  display: flex;
+  flex-wrap: wrap; /* Enables wrapping for landscape images */
+  gap: 16px; /* Ensures spacing between landscape images */
+}
+
+.image-group-landscape img {
+  width: calc(33% - 16px); /* Each image takes up 33%, accounting for gap */
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+  display: block; /* Ensures images don't have unexpected inline spacing */
+}
+
+/* General Image Styling */
+.image-group img {
+  width: calc(25% - 16px); /* Each image takes up 25%, minus spacing */
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+/* Video Group Styling */
+.video-group {
+  display: flex;
+  flex-wrap: wrap; /* Allows videos to wrap within the boundary */
+  gap: 16px; /* Consistent spacing between videos */
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.video-wrapper-portrait {
+  width: calc(25% - 12px); /* Adjusted for spacing */
+  height: auto;
+  border-radius: 4px;
+  overflow: hidden; /* Ensures videos fit inside the wrapper */
+}
+
+.video-wrapper-landscape {
+  width: calc(33% - 12px); /* Adjusted for spacing */
+  height: auto;
+  border-radius: 4px;
+  overflow: hidden; /* Ensures videos fit inside the wrapper */
+}
+
+.video-wrapper video {
+  width: 100%; /* Ensures video fills the wrapper */
+  height: auto;
+  border-radius: 4px;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  /* Adjust navigation for smaller screens */
+  .e36-nav .toc {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .e36-nav .toc a {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  main {
+    padding: 80px 15px 15px 15px; /* Adjust top padding if nav height changes */
+  }
+
+  .media-item {
+    flex: 1 1 calc(100% - 16px);
+    max-width: calc(100% - 16px);
+  }
+
+  .image-group img {
+    width: calc(50% - 8px); /* Images take up 50% on smaller screens */
+  }
+
+  .video-wrapper-portrait, .video-wrapper-landscape {
+    width: calc(50% - 8px); /* Videos take up 50% on smaller screens */
+  }
+
+  .media-caption {
+    font-size: 12px; /* Smaller font size for captions on smaller devices */
+  }
+}
+
+@media (max-width: 480px) {
+  /* Mobile Navigation: Stack items vertically */
+  .e36-nav .toc {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .e36-nav .dropdown {
+    position: static; /* Dropdowns align with parent in mobile */
+    box-shadow: none; /* Remove shadows for mobile */
+    border: none; /* Remove borders for mobile */
+  }
+
+  .e36-nav .dropdown a {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  main {
+    padding: 80px 10px 10px 10px; /* Adjust padding for mobile */
+  }
+
+  .image-group-portrait img,
+  .image-group-landscape img {
+    width: 100%; /* Images take full width on very small screens */
+  }
+
+  .video-wrapper-portrait,
+  .video-wrapper-landscape {
+    width: 100%; /* Videos take full width on very small screens */
+  }
+}
+
+/* TOC Nested Lists */
+.toc ul {
+  list-style-type: none; /* Remove bullets from nested lists */
+  padding-left: 20px; /* Indent nested lists */
+}
+
+.toc ul li a {
+  padding: 8px 20px; /* Adjust padding for nested links */
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+}
+
+.toc ul li a:hover {
+  background-color: #eaeaea;
+}
+
+/* Active Link Styling */
+.e36-nav .toc li a.active {
+  background-color: #1abc9c;
+  color: #ffffff;
+}
+
+/* Transition for Dropdowns */
+.e36-nav .dropdown {
+  transition: all 0.3s ease;
+}
+
+.e36-nav .dropdown.show {
+  display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
