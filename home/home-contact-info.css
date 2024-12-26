@@ -1,0 +1,121 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    text-align: center;
+    color: #000000;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin: 20px 0;
+}
+
+h3 {
+    font-size: 1.4rem;
+    margin: 15px 0;
+}
+
+p {
+    text-align: left;
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin: 10px auto;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    max-width: 800px;
+    margin: 10px auto;
+}
+
+li {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #e0f7fa;
+    border-left: 5px solid #4dd0e1;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+li::before {
+    content: '◆';
+    font-size: 1.2rem;
+    color: #4dd0e1;
+    margin-right: 10px;
+}
+
+iframe {
+    display: block;
+    margin: 30px auto;
+    border: none;
+    width: 70%;
+    height: 80vh;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    h1 {
+        font-size: 2rem;
+    }
+    iframe {
+        height: 70vh;
+    }
+}
+
+/* Document Links/Buttons Container */
+.document-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto; /* Center the container */
+    gap: 15px;
+}
+
+/* Individual Document Link */
+.document-link {
+    display: flex;
+    justify-content: center; /* Center content inside the button */
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    color: #1e293b;
+    text-decoration: none;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    font-weight: 500;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    min-width: 120px; /* Set a minimum width to ensure proper alignment */
+    text-align: center;
+}
+
+.document-link:hover {
+    background-color: #0ea5e9;
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Icon inside the button */
+.document-link i {
+    margin: 0; /* Remove side margin to center the icon */
+    font-size: 1.2rem;
+}

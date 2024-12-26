@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OBDII Projects</title>
+    <link rel="stylesheet" href="personal-projects-odii.css">
+    <link rel="stylesheet" href="../main-nav/main-nav-style.css">
+    <link rel="stylesheet" href="../footer/footer-links-style.css"> 
+</head>
+<body>
+    <div id="navbar"></div>
+    <script src="../main-nav/main-load-nav.js"></script>
+
+    <h1>OBDII Projects</h1>
+    <h2>OBDII LCD (In Progress)</h2>
+    <p>
+        I am eager to get back into the OBDII project when time permits. The project aims to connect an on-board diagnostic tool to my vehicle, an E36, communicating via Bluetooth with an Arduino ESP and displaying results on an interactive LCD. I have created the code with functions that I want the ESP to call and receive data from the OBD.
+    </p>
+    <p>
+        The idea is to connect a touch LCD screen and create an interface that allows the user to easily navigate and select performance indicators to view. I purchased the LCD from AliExpress, but I have not been able to get it to work due to the limited time I have spent on the project. I need to investigate the issues encountered and determine the next steps for creating the interface, along with fine-tuning the system.
+    </p>
+
+    <h2>OBDII Gear Stick (In Progress)</h2>
+    <p>
+        Another project that has been placed on the back burner is the custom gear shifter. I have tinkered with it, but the specific feature I intended to implement is more difficult than anticipated.
+    </p>
+    <p>
+        The main purpose of the custom gear shifter is to display the gear number. The shifter has been prototyped and installed with an ESP, smart watch LCD, along with a battery pack. It’s a fairly thick shifter; however, it looks sleek for its function. 
+    </p>
+    <p>
+        It was intended to use an accelerometer to determine the position and angle of the shifter to indicate the gear number. However, using the accelerometer has proven to be much more difficult than expected. To gauge position, there are a few calculations the microcontroller must perform, as it measures both linear and angular acceleration. The accelerometer is extremely sensitive and challenging to fine-tune. I believe the accelerometer is valid for use; however, it will require a considerable amount of time to get it right. I have also purchased a magnetometer to capture the missing yaw, which may be beneficial for overall positioning. 
+    </p>
+</body>
+
+<footer>
+    <script src="../scripts/email-script.js"></script> 
+    <div id="footer-links-container"></div>
+    <script src="../footer/footer-links.js"></script>  
+</footer>
+
+</html>

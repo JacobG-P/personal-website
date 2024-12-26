@@ -1,0 +1,60 @@
+.personal-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* Ensures icons adapt to smaller screens */
+    margin-top: 120px;
+    margin-bottom: 120px;
+    width: 100vw; /* Full width */
+    gap: 20px; /* Adds consistent spacing between elements */
+}
+
+.personal-links a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none; /* Removes any underline on links */
+    transition: transform 0.3s ease;
+}
+
+.personal-links a:hover {
+    transform: scale(1.1); /* Slight scaling on hover */
+}
+
+/* Glowing Footer Images */
+.personal-links img {
+    border-radius: 50%; /* Circular design for icons */
+    height: 10vh; /* Uniform height for all icons */
+    width: auto; /* Maintain aspect ratio */
+    background: linear-gradient(90deg, #ff7eb3, #ff758c, #42e695, #3bb3ff, #ff7eb3); /* Gradient background */
+    background-size: 300% 300%;
+    animation: gradientGlow 8s ease infinite; /* Glow animation */
+    box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.6), /* Subtle initial glow */
+        0 0 40px rgba(255, 255, 255, 0.4), 
+        0 0 60px rgba(255, 255, 255, 0.2); /* Base outer glow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover Effect for Glowing Images */
+.personal-links img:hover {
+    transform: scale(1.1); /* Slight zoom on hover */
+    box-shadow: 
+        0 0 30px rgba(255, 255, 255, 0.8), /* Enhanced glow on hover */
+        0 0 50px rgba(255, 255, 255, 0.6), 
+        0 0 80px rgba(255, 255, 255, 0.4); /* More intense outer glow */
+}
+
+
+/* Glow Animation */
+@keyframes gradientGlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}

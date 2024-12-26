@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Projects</title>
+    <link rel="stylesheet" href="coding-projects.css">
+    <link rel="stylesheet" href="../main-nav/main-nav-style.css">
+    <link rel="stylesheet" href="../footer/footer-links-style.css"> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.x/css/all.min.css">
+    <script src="https://unpkg.com/@google/model-viewer/dist/model-viewer.js"></script>
+</head>
+
+<body>
+    <header>   
+        <div id="navbar"></div>
+        <script src="../main-nav/main-load-nav.js"></script>
+        <h1>Coding Projects</h1>   
+    </header>
+
+    <nav class="coding-projects-nav" role="navigation" aria-label="Main Navigation">
+        <ul class="toc">
+            <li><a href="#introduction">Introduction</a></li>
+            <li>
+                <a href="#python" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">Python</a>
+                <div class="dropdown">
+                    <ul>
+                        <li><a href="#automated-document-uploader">Automated Document Uploader</a></li>
+                        <li><a href="#ocr-reader">OCR Reader</a></li>
+                        <li><a href="#3d-printing">3D Printing</a></li>
+                        <li><a href="#gym">Gym</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li><a href="#javascript">JavaScript</a></li>
+            <li><a href="#other">Other</a></li>
+        </ul>
+    </nav>
+    
+
+     <!-- Dropdown Toggle Script -->
+     <script>
+        // Coding Navigation Dropdown Behavior with ARIA support
+        document.querySelectorAll('.coding-projects-nav .dropdown-toggle').forEach(item => {
+            item.addEventListener('click', event => {
+                event.preventDefault();
+                const dropdown = item.nextElementSibling;
+    
+                // Toggle ARIA expanded state
+                const isExpanded = item.getAttribute('aria-expanded') === 'true';
+                item.setAttribute('aria-expanded', !isExpanded);
+    
+                // Close other dropdowns at the same level
+                const parentLi = item.parentElement.parentElement; // <ul> parent
+                parentLi.querySelectorAll('.dropdown').forEach(d => {
+                    if (d !== dropdown) {
+                        d.classList.remove('show');
+                        const toggle = d.previousElementSibling;
+                        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+    
+                // Toggle the current dropdown
+                if (dropdown) {
+                    dropdown.classList.toggle('show');
+                }
+            });
+        });
+    
+        // Close dropdowns when clicking outside of e36-nav
+        document.addEventListener('click', event => {
+            if (!event.target.closest('.coding-projects-nav')) {
+                document.querySelectorAll('.coding-projects-nav .dropdown').forEach(d => {
+                    d.classList.remove('show');
+                    const toggle = d.previousElementSibling;
+                    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+                });
+            }
+        });
+    
+        // Optional: Close dropdowns when pressing the Escape key
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.coding-projects-nav .dropdown').forEach(d => {
+                    d.classList.remove('show');
+                    const toggle = d.previousElementSibling;
+                    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+                });
+            }
+        });
+    </script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const collapsibles = document.querySelectorAll('.collapsible');
+            
+            collapsibles.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.nextElementSibling;
+                    
+                    if (content.classList.contains('show')) {
+                        content.classList.remove('show');
+                    } else {
+                        content.classList.add('show');
+                    }
+                });
+            });
+
+            // Optional: Expand the section if its ID is in the URL hash
+            if (window.location.hash) {
+                const targetSection = document.querySelector(window.location.hash + ' .collapsible');
+                if (targetSection) {
+                    targetSection.click();
+                    targetSection.scrollIntoView();
+                }
+            }
+        });
+    </script>    
+
+    <main>
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>
+                I dedicate this page to documenting software projects, both professional and personal, that simplify tasks and enhance efficiency across various programming languages and applications.
+            </p>            
+        </section>
+        
+    
+        <section id="Python">
+            <h3 class="collapsible">Python</h3>
+            <div class="content">
+                <article id="automated-document-uploader">
+                    <h3 class="collapsible">Automated Document Uploader</h3>
+                    <div class="content">
+                        <p>
+                            The Northern Peninsula Area Water Supply Scheme (NPAWSS) Operation and Maintenance (O&M) contract, awarded to Veolia, involved inheriting documents from the previous contractor. A key priority was the creation of a Document Register and Storage System to streamline document management and access.
+                        </p>
+                        
+                        <p>
+                            The Document Register, built in Google Sheets, categorized and linked documents, implemented Veolia’s standardized numbering system, and automated updates and storage using Google Apps Script. Engineering drawings were stored in Veolia’s Electronic Document Management System (EDMS), selected for its intuitive interface, adaptability, and built-in review and approval processes.
+                        </p>
+                        
+                        <p>
+                            However, the EDMS lacked bulk upload capability, necessitating manual uploads for over 1,000 drawings—each taking approximately three minutes. To address this, I developed a Python script to automate the uploading process through Selenium, navigating and interacting with the page based on its web element autonomously. After thorough testing and validation, I created a simpler script to delete existing files iteratively to reset the system, as there were previous manual uploads and uploads from script testing. The deletion script included the following steps:
+                        </p>
+                        
+                        <ul>
+                            <li>Log into my Veolia account by entering the username and password, with manual permission required for two-factor authentication.</li>
+                            <li>Locate and open the top drawing.</li>
+                            <li>Navigate to drawing information > properties > delete and confirm.</li>
+                            <li>Buffer for load time and repeat from step 2 until no drawings remain and timing out the script.</li>
+                        </ul>
+                        <p><em>The video below displays the delete feature.</em></p>
+                        <div class="video-container">
+                            <video class="controlled-video" controls muted autoplay>
+                                <source src="./EDMS/2024-07-31 08-44-13 - Trim - Trim.mp4" type="video/mp4">
+                            </video>
+                        </div>
+
+                        <p>
+                            Once the deletion was successfully implemented, I deployed the upload script, which followed these steps:
+                        </p>
+                        
+                        <ul>
+                            <li>Log into my Veolia account by entering the username and password, which requires manual permission for two-factor authentication.</li>
+                            <li>Connect the script to the Document Register via API to extract the required information row by row.</li>
+                            <li>Read the first row to determine the upload process, deciding whether to append revisions to the base drawing or handle base drawings.</li>
+                            <li>Navigate to the EDMS homepage for uploads.</li>
+                            <li>Populate all fields with information extracted from the Document Register, including Drawing Number, Revision, Organisation, Document Type, Discipline, Plant, Sub-plant, comments, supplier numbers, and any markings for required redlined drawings for traceability.</li>
+                            <li>The script will upload the base drawing's PDF and DWG files (if the drawing had a DWG file).</li>
+                            <li>Afterward, the script will save, confirm, and upload the drawing as a draft, completing the review process to mark the drawing as complete and uploaded.</li>
+                            <li>If a revision or revisions is/are required, the script will refresh the page and navigate to create a new version within the upload. It will fill in the revision information, update the revision number (while keeping the remaining fields the same), update comments, delete the previous revision's PDF and DWG files, and re-upload the revised files, repeating the final upload steps.</li>
+                            <li>The script would finally exit to the homepage to repeat from step 3 until the script would time out with no information read from the Document Register or internet or login disconnection.</li>
+                        </ul>
+                        
+                        <p>
+                            Initially, the script struggled with slow-loading dropdown fields, necessitating sufficient buffer times. Additionally, the script lacked the capability to access the linked URLs contained in the Document Register to directly download and upload to the EDMS. To resolve this, I created a JavaScript function to download all files from the Document Register, which contained over 1,400 PDFs. The script would pull the file names and search my personal computer to locate and upload them.
+                        </p>
+                        
+                        <p>
+                            The most challenging feature to implement was the drawing file upload, which required accessing a specific iframe for the upload process. Since the iframe address was randomized, the script was designed to locate all iframe addresses and attempt the upload iteratively for each one until a successful upload was confirmed. At times, the page would have several iframes, while other times it could have upwards of 30. Moreover, successful uploads seemed random; the script might identify 30 iframes but could successfully upload during its first or last attempt. There was no indication from the web element to help narrow or filter through the iframes. However, the script was robust and reliable.
+                        </p>
+                        
+                        <p>
+                            The script performed well; it required excessive time delays and robust features to improve reliability at the expense of quickness.
+                        </p>
+                        <p><em>The video below displays the upload feature for the base and revision drawings. Please note, BMS which hosts the EDMS page is offline switching platforms.</em></p>
+                        <div class="video-container">
+                            <video class="controlled-video" controls muted autoplay>
+                                <source src="./EDMS/EDMS Upload - Trim.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                </article>
+                <article id="ocr-reader">
+                    <h3 class="collapsible">OCR Reader</h3>
+                    <div class="content">
+                        <p>An audit conducted at the Western Corridor (WSC) revealed a significant issue: several asset tags were missing from various locations. To address this problem, management decided to contract an external specialist tasked with identifying and rectifying the missing asset tags. My role in this project involved closely reviewing the contractor’s work to ensure that all missing tags were accurately identified and documented.</p>
+
+                        <p>In addition to reviewing the contractor’s findings, I took on the responsibility of digitizing the asset tags and notes from printed drawings. This required meticulous attention to detail, as it was essential to maintain accuracy while transferring information from physical documents to digital formats.</p>
+                        
+                        <p>Initially, I developed an Optical Character Recognition (OCR) reader to expedite the digitization process. My aim was to leverage technology to streamline the workflow and minimize manual data entry. The contractor colour coded his changes which I aimed to utilise to automate the process. However, I ultimately discontinued this approach due to accuracy challenges that arose during testing. The OCR technology struggled with deciphering the drawing's colour codes and notes by the contractor, resulting in a lot of noise and errors that could not be overlooked.</p>
+                        
+                        <p>Despite this setback, the experience proved to be immensely valuable. I gained significant insights into the capabilities and limitations of OCR technology, as well as the troubleshooting process necessary to address such challenges. This hands-on experience enhanced my understanding of how to integrate technology into asset management and improved my problem-solving skills, which will be beneficial for future projects.</p>
+                        
+                        <p>Overall, while the project did not go entirely as planned, the lessons learned were instrumental in my professional development and will inform my approach to similar challenges in the future.</p>
+                        
+                    </div>
+                </article>
+                <article id="3d-printing">
+                    <h3 class="collapsible">3D Printing</h3>
+                    <div class="content">
+                        <p>I have a passion for 3D printing, whether it involves creating designs for clients, developing custom car parts, or working on personal projects. The versatility and creativity that 3D printing offers allow me to explore new ideas and bring them to life. However, I encountered a significant challenge in tracking costs across different printing streams, which often became tedious due to the manual data entry required.</p>
+
+                        <p>To address this issue and enhance efficiency, I took the initiative to develop a Python script that automates the data extraction process. This script runs automatically after each print is sliced and saved, extracting key information from the G-code file. The data collected includes vital metrics such as material usage, printing time, dimensions of the print, and layer height. Importantly, the script converts this information into meaningful units that are easy to interpret and analyze.</p>
+                        
+                        <p>Once the data is extracted, it is seamlessly imported via an API into a Google Sheet specifically designed to log all 3D prints for the 2024-2025 financial year. This Google Sheet organizes the information into an intuitive interface, allowing me to easily select the print category, printer, and material. As a result, I can obtain precise costs associated with each print job, as well as real-time usage statistics and percentages that are consistently updated across all streams and outputs.</p>
+                        
+                        <p>Additionally, I implemented Java-based automation that captures the import time and uses it as the print start time. This feature allows for a sequential arrangement of the prints, ensuring that all relevant data is populated in the respective category sheets. This detailed tracking system not only facilitates comprehensive analysis of print data and costs but also helps in identifying trends and areas for improvement in the printing process. Moreover, Java is used to connect to the Australia Post API to allow immediate calculation of postage cost having information on the print size and weight to determine the most appropriate packaging and transport costs.</p>
+                        
+                        <p>Overall, the combination of Python scripting and Google Sheets has significantly streamlined my 3D printing workflow, making it easier to manage projects and track costs effectively. This automation has not only saved me time but has also provided valuable insights into my printing activities, enhancing my ability to make informed decisions for future projects.</p>                       
+                    </div>
+                </article>
+                <article id="gym">
+                    <h3 class="collapsible">Gym</h3>
+                    <div class="content">
+                        <p>
+                            I track my gym sessions in monthly Google Sheets, compiling the data into a summary report to monitor personal bests and progress. Over time, the summary sheet became sluggish due to the increasing amount of real-time data from multiple sheets. I explored storage solutions, but most came with monthly costs. Instead, I created a Python script to extract session data from Google Sheets and store it in a database for access by the summary report. While this system showed significant improvement, it was ultimately discontinued due to its tedious nature and the need for constant database access meaning my PC would have to be running for updates, and I wasn’t too interested in purchasing live storage. 
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </section>
+        <section id="javascript">
+            <h3 class="collapsible">JavaScript</h3>
+            <div class="content">
+                <p>
+                    I don't have too many big projects or major ideas with JavaScript. I mainly use it to streamline and automate processes, such as:
+                </p>
+                <ul>
+                    <li>Adding timestamps to actions, e.g., timestamps on importing 3D printing data to estimate when the print started and how long it should take, tracking gym starting and finishing times through checkboxes, etc.</li>
+                    <li>Facilitating bulk downloads and uploads by specifying in sheets which files to download or upload from or to a Google Drive location.</li>
+                    <li>Manipulating file properties, such as changing file names and/or locations.</li>
+                    <li>Incorporating APIs for Google Sheets to enhance data management and accessibility.</li>
+                    <li>Creating dynamic user interfaces for web applications to improve user experience and interaction.</li>
+                    <li>Implementing data validation scripts to ensure data integrity in forms and spreadsheets.</li>
+                    <li>Automating email notifications based on certain triggers or conditions in my projects.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="other">
+            <h3 class="collapsible">Other</h3>
+            <div class="content">
+                <p>
+                    I quite well versed in GoogleSheets and Excel primarily using in work but also through personal interests and projects. 
+                </p>
+                <p>
+                    Moreover, I have always been interested in Arduino, utilised in a multitude of university and personal projects.  
+                </p>
+            </div>
+        </section>
+    </main>
+    <script src="../scripts/video-volume.js"></script>
+
+</body>
+
+<footer>
+    <script src="../scripts/email-script.js"></script> 
+    <div id="footer-links-container"></div>
+    <script src="../footer/footer-links.js"></script>  
+</footer>
+
+</html>

@@ -1,0 +1,165 @@
+/* General reset and base styles */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    color: #fcf6f6;
+}
+
+/* Headings */
+h1, h2, h3 {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 1.8rem;
+    margin: 20px 0;
+}
+
+h3 {
+    font-size: 1.4rem;
+    margin: 15px 0;
+}
+
+/* Container for content */
+.container {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+    overflow: hidden;
+    margin-top: 10px;
+    transition: margin 0.3s ease;
+}
+
+/* Content alignment */
+.content {
+    flex: 1;
+    margin-left: 20px;
+    text-align: center;
+    margin-top: 0;
+}
+
+/* Description section */
+.description {
+    margin: 10px auto;
+    text-align: left;
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Image row styling */
+.image-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.image-row div {
+    flex: 0 0 auto;
+    text-align: center;
+}
+
+.image-row img {
+    max-width: 100%;
+    max-height: 300px;
+    margin-bottom: 10px;
+    border: 3px groove #4d4d4d;
+    animation: animate-tiles 3s alternate infinite;
+}
+
+@keyframes animate-tiles {
+    from {
+        box-shadow: 0 0 0 1px rgb(0, 0, 0);
+    }
+    to {
+        box-shadow: 1px 1px 10px 1px rgb(255, 255, 255);
+    }
+}
+
+/* Rotated elements */
+.rotate {
+    transform: rotate(-90deg);
+}
+
+
+/* Horizontal image bar */
+.image-bar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: auto;
+    white-space: nowrap;
+    height: 150px;
+}
+
+.image-bar-image {
+    margin-right: 10px;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
+
+.video-container {
+    display: flex;
+    flex-wrap: wrap; /* Ensures wrapping if the viewport is narrow */
+    gap: 20px; /* Adds space between items */
+    justify-content: center; /* Centers videos horizontally */
+    margin-bottom:20px;
+}
+
+.video-container video{
+    border: 3px groove #4d4d4d;
+    animation: animate-tiles 3s alternate infinite;
+}
+
+.video-item {
+    flex: 1 1 auto; /* Allows flexible width */
+    max-width: 560px; /* Matches video width */
+    text-align: center; /* Centers caption below video */
+}
+
+.image-label {
+    margin-top: 10px;        /* Space above the label */
+    font-size: 16px;         /* Font size of the label */
+    color: #b3b3b3;          /* Text color */
+    font-style: italic;      /* Make the font italic */
+}
+
+@media (max-width: 768px) {
+    .video-container {
+      flex-direction: column; /* Stacks videos vertically */
+      align-items: center;
+    }
+  
+    .video-item {
+      max-width: 100%; /* Ensures videos shrink to fit the container */
+    }
+    body {
+        padding: 10px;
+    }
+    h1 {
+        font-size: 2rem;
+    }
+    iframe {
+        height: 70vh;
+    }
+  }
+
+  iframe {
+    display: block;
+    margin: 30px auto;
+    border: none;
+    width: 40%;
+    height: 80vh;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}

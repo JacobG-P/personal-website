@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatic Blinds</title>
+    <link rel="stylesheet" href="automatic-blinds.css">
+    <link rel="stylesheet" href="../main-nav/main-nav-style.css">
+    <link rel="stylesheet" href="../footer/footer-links-style.css"> 
+</head>
+<body>
+    <div id="navbar"></div>
+    <script src="../main-nav/main-load-nav.js"></script>
+
+    <h1>Automatic Blinds</h1>
+    <p>
+        I’m a bit of a night owl and not much of a morning person, but I’d like to change that. I set out to create a contraption that automatically opens and closes my blinds. The goal is to have them open early in the morning, based on light levels, to help me wake up naturally.
+    </p>
+    <p>
+        The project has several key requirements:
+    </p>
+    <ul>
+      <li>The product must be compatible with my existing blinds, requiring minimal modifications.</li>
+      <li>The motors need to provide sufficient torque to lift and lower the blinds at an optimal speed, targeting .3m/s.</li>
+      <li>The design should be as simple as possible.</li>
+      <li>It should include sensors and logic to determine blind positioning, ensuring accurate operation and preventing failures.</li>
+      <li>The blinds must open automatically based on input from a Light Dependent Resistor (LDR) which will be fine tuned and adjustable for other seasons.</li>
+      <li>Power should be supplied via mains to eliminate the need for using, replacing, or charging batteries.</li>
+      <li>The blinds should be controllable through physical buttons for preset positions and a joystick for manual adjustments, both housed near the motor and board for backup and fine-tuning. However, the primary control method will be a remote control using Infrared components integrated with an Arduino.</li>      
+    </ul>
+
+    <h2>Preliminary Testing</h2>
+    <p>
+        To better understand motor and power requirements, I tested the torque needed to actuate the blinds. The testing setup was rudimentary but effective: I created a custom piece to fit inside the blinds, equipped with arms marked with increments to more accurately measure torque by varying the length and weight.
+    </p>
+    <div class="image-row">
+        <img src="./pictures/Blind Torque Test.jpg" alt="Blind Torque Testing">
+    </div>
+
+    <p>
+        The blinds began to lift with a mass of 0.481 kg at a length of 30 mm, generating a torque of 0.1415583 Nm.
+    </p>
+
+    <div class="image-row">
+        <img src="./pictures/IMG_5526.jpeg" alt="Testing setup close-up">
+        <img src="./pictures/IMG_5527.jpeg" alt="Another view of the setup">
+    </div>
+    
+    <p>
+        It’s worth noting that lowering the blinds proved counterintuitively, much more difficult due to locking from the beaded pulley system. Even with more than triple the weight, the blinds wouldn't budge. I don’t plan to keep the beaded pulley—even as a backup—as it will create noise especially at intended speeds. I plan to remove it entirely. If needed, I could always wind the blinds manually by hand, adding a diode if required to prevent back voltage to the motor, which could potentially damage other electronics.
+    </p>
+
+    <div class="image-row">
+        <img src="./pictures/IMG_5528.jpeg" alt="Beaded pulley system">
+    </div>
+    <h2>Motor Selection</h2>
+    <p>
+        I initially hoped to use a spare 775 drill motor that’s been lying around for years, but I’m still uncertain about its specifications. I assembled a small testing apparatus but am waiting on an H-Bridge to properly control the motor, and I'm hoping the maximum current of the motor is less than the H-Bridge (I'll find out, if there's a fire or not). Currently, the motor spins uncontrollably, making it difficult to test stall torque.
+    </p>
+    <div class="image-row">
+        <img src="./pictures/775 Drill Motor Torque Test.jpg" alt="Beaded pulley system">
+    </div>
+    <p>
+        While waiting, I researched suitable motors and evaluated various DC options with detailed specifications. I found several similar 775 motors, but their specifications varied significantly and were often incomplete. Ultimately, I decided on an A2208 KV2600 motor paired with a 30A ESC, typically used in RC planes. This motor was more affordable than most shortlisted options and more than suitable for the project, likely providing sufficient torque to overcome the bead-locking mechanism if needed (although I plan to remove the beads regardless). Additionally, the motor comes bundled with an ESC for control, saving both money and the effort of researching compatible components. Standard Arduino DC motor controllers, like the H-Bridge L298N, are limited to 2A, which imposes constraints around motor selection and/or higher-rated control components.
+    </p>
+    <p>
+        The RC motor operates at 2600KV (RPM per volt), producing 0.0036728 Nm of torque per amp. It is rated for 2s-3s LiPo batteries (7.4-11.7V) but can also handle undercharged and overcharged LiPos (6.4-12.6V). The motor will be geared down to a 1:48 ratio, resulting in a maximum of 54.17KV and 0.1763 Nm per amp.
+    </p>
+    <p>
+        I purchased a 12V, 5A laptop AC adapter, which I plan to modify to connect to the ESC. To protect the system, I will install a 5A fuse between the adapter and the ESC. This fuse will prevent excessive power draw beyond the transformer's rating, in the case when the blinds become stuck and the motor demands more than 5A, by breaking the circuit. Additionally, it will safeguard upstream components by disconnecting the circuit in the event of transformer faults or power surges.
+    </p>
+    
+    <p>
+        I plan to run the motor at 12V, geared down to achieve 650 RPM. This setup will provide the targetted blind speed of 0.3 m/s, requiring 229.18 RPM, offering a maximum speed of 0.85 m/s, which will be controlled and reduced via the ESC’s PWM. This also provides some insurance against actual RPM limit if applicable (RPM is often below the maximum KV rating, 30420).
+    </p>
+    
+    <p>
+        The gearing system features a 1:48 reduction using a pre-purchased plastic M0.5 worm drive, bored out to fit the 3.175 mm motor shaft and secured with hot glue. I believe the off-the-shelf plastic worm drives will be durable enough for this application. Due to the wear generated by worm drives, 3D printing one is not viable—particularly for a small, high-RPM setup. The worm drive will step down to a 24-tooth M0.5 gear with a 2 mm internal diameter, mounted on 2 mm stainless steel rods.
+    </p>
+    
+    <p>
+        The gear system consists of double gears: a 12-tooth gear meshing with a 24-tooth gear mounted on a separate 2 mm rod. The housing is divided into three sections: a central piece for mounting the motor, with cutouts for wiring, and two side sections featuring ventilation slots. While these slots might collect dust, this is not expected to pose a significant issue. The housing design enables assembly by aligning the sides to support the rods and clamping them together using 2 mm threaded stainless steel rods and M2 bolts. The drive end of the 2 mm shaft extends through the housing to connect with the blinds’ shaft, supported by a wall-mounted bracket. For this connection, I plan to use a drill bit with a 2 mm internal diameter on the drive end, secured with an adjustable clamp to attach it to the blinds.
+    </p>
+    <p>
+        The motor will be controlled by the ESC controlled by the MicroController. The ESC provides a maximum BEC to the Microcontroller Board, which will be an Arduino Nano, of up to 3A if required, while also supplying power to the motor. The Microcontroller will control the motor through a controller, buttons, and joysticks, although these components will not be modeled in CAD. The controller will be an off-the-shelf Arduino Infrared Remote purchased a while ago as part of an Arduino Uno Starter Kit. I will map each button to a specific function. The buttons and joystick will likely sit on a breadboard near the device, with a quick connection terminal to allow for easy disconnection and reconnection of power if needed. The device will utilize two photointerrupters to track positioning. The photointerrupters will be offset to provide a higher degree of precision (offer half interrupts) and enable the system to interpret direction if required. The motor will operate based on interrupts per second or move a set number of interrupts to ensure the system remains calibrated with accurate positioning (as accurately as possible). Currently, a 25 mm diameter disc with 20 slots will be used for the interrupts. This setup, being 1:1 with the blind diameter, will result in 20 interrupts on the vertical photointerrupter and 19 for the photointerrupter.
+    </p>
+    
+    <p>
+        The images below display the concept design. Progress is currently awaiting parts in transit.
+    </p>
+    <div class="image-row">
+        <img src="./pictures/Automatic Blinds Iso.jpg" alt="Another view of the setup">
+        <img src="./pictures/Automatic Blinds Internal.jpg" alt="Testing setup close-up">
+    </div>
+    <p>
+        The initial idea, shown in the image below, was to utilize the same 2600KV motor with an M1 worm gear to drive a 3D-printed M1 gear. The 3D-printed gear, designed with slots to attach to the blind's end (similar to the torque-testing piece but without the arms), would provide a 1:100 reduction ratio. The plan included a 50T M1 gear connecting to the 25 mm diameter blind. However, this design required a metal coupler between the motor and the worm gear to adapt the motor's 3.175 mm shaft to the worm gear’s bore size of 5 mm or 6 mm, depending on the selected worm gear. (I couldn’t find any M1 worm gear with a 3.175 mm internal diameter.) The assembly would have been self-tensioned back to the motor’s backplate. However, the idea was abandoned due to the clearance issue—only 1 mm of space from the wall, as indicated by the plane in the image below—which necessitated a different mounting position, and overall didn't have much motivation to continue pursue and flesh it out.
+    </p>
+    <div class="image-row">
+        <img src="./pictures/Automatic Blinds Idea 1.jpg" alt="Another view of the setup">
+    </div>
+     
+</body>
+
+<footer>
+    <script src="../scripts/email-script.js"></script> 
+    <div id="footer-links-container"></div>
+    <script src="../footer/footer-links.js"></script>  
+</footer>
+
+</html>
